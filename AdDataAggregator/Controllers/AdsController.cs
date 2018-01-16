@@ -16,6 +16,10 @@ namespace AdDataAggregator.Controllers
     {
         private const string ADS_CACHE_KEY = "ALL_ADS";
 
+        /// <summary>
+        /// Gets ads from wcf service for the following date range: January 1st, 2011 and April 1st, 2011
+        /// </summary>
+        /// <returns></returns>
         private async Task<IEnumerable<Ad>> GetAllAdsFromServiceAsync() {
             var client = new AdDataServiceClient();
             var tasks = new List<Task<Ad[]>>();
@@ -38,6 +42,10 @@ namespace AdDataAggregator.Controllers
             return ads;
         }
 
+        /// <summary>
+        /// Attempts to retrieve Ad objects from cache if the exist, otherwise the objects are added to the cache. 
+        /// </summary>
+        /// <returns></returns>
         private async Task<IEnumerable<Ad>> GetAllAdsFromCacheAsync() {
             var cache = MemoryCache.Default;
             var ads = cache.Get(ADS_CACHE_KEY) as IEnumerable<Ad>;
@@ -49,12 +57,20 @@ namespace AdDataAggregator.Controllers
             return ads;
         }
 
+        /// <summary>
+        /// Get all ads sorted by brand name.
+        /// </summary>
+        /// <returns></returns>
         [Route("list")]
         public async Task<IEnumerable<Ad>> GetAllAds() {
             var ads = await this.GetAllAdsFromCacheAsync();
             return ads.OrderBy(a => a.Brand.BrandName);
         }
 
+        /// <summary>
+        /// Get Cover ads that take up 50% of the page or more, and are sorted by brand name. 
+        /// </summary>
+        /// <returns></returns>
         [Route("cover")]
         public async Task<IEnumerable<Ad>> GetCoverAdsOver50() {
             var ads = await this.GetAllAdsFromCacheAsync();
@@ -62,6 +78,11 @@ namespace AdDataAggregator.Controllers
                 .OrderBy(a => a.Brand.BrandName);
         }
 
+        /// <summary>
+        /// Get the top 5 ads with the highest page coverage amount, 
+        /// distinct by brand id and sorted by page coverage(descending) and brand name.
+        /// </summary>
+        /// <returns></returns>
         [Route("top5ads")]
         public async Task<IEnumerable<Ad>> GetTop5Ads() {
             var ads = await this.GetAllAdsFromCacheAsync();
@@ -76,6 +97,11 @@ namespace AdDataAggregator.Controllers
             return top5AdsDistinctBrand.Values.ToList();
         }
 
+        /// <summary>
+        /// Get the top 5 brands with the highest page coverage amount
+        /// sorted by page coverage(descending) and brand name.
+        /// </summary>
+        /// <returns></returns>
         [Route("top5brands")]
         public async Task<IEnumerable<Ad>> GetTop5Brands() {
             var ads = await this.GetAllAdsFromCacheAsync();
