@@ -20,7 +20,10 @@ const config: webpack.Configuration = {
         new UglifyJsPlugin({
             sourceMap: true
         })
-    ]
+    ],
+    externals: {
+        jquery: "jQuery"
+    }
 };
 
 export default config;

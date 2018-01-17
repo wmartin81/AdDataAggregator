@@ -119,6 +119,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <None Include="Connected Services\ServiceReference1\AdService2.xsd">
@@ -170,7 +171,9 @@
     <WCFMetadataStorage Include="Connected Services\ServiceReference1\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\ad-data.ts" />
     <TypeScriptCompile Include="src\app.ts" />
+    <TypeScriptCompile Include="src\menu.ts" />
     <TypeScriptCompile Include="webpack.config.ts" />
   </ItemGroup>
   <ItemGroup>

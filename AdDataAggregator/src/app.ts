@@ -1,5 +1,10 @@
-﻿class Greeting {
-    text: string = "Hello World!";
+﻿import { Menu } from './menu';
+import { AdData } from './ad-data';
+
+const main = () => {
+    $('#jquery-app')
+        .append(Menu())
+        .append(AdData());
 }
-let greeting = new Greeting();
-console.log(greeting.text);
+
+$(main);
