@@ -1,24 +1,20 @@
 ﻿using AdDataAggregator.Models;
 using AdDataAggregator.ServiceReference1;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace AdDataAggregator.Controllers
-{
+namespace AdDataAggregator.Controllers {
     [RoutePrefix("api/ads")]
     public class AdsController : ApiController
     {
         private const string ADS_CACHE_KEY = "ALL_ADS";
 
         /// <summary>
-        /// Gets ads from wcf service for the following date range: January 1st, 2011 and April 1st, 2011
+        /// Get ads from wcf service for the following date range: January 1st, 2011 and April 1st, 2011
         /// </summary>
         /// <returns></returns>
         private async Task<IEnumerable<Ad>> GetAllAdsFromServiceAsync() {
@@ -44,7 +40,7 @@ namespace AdDataAggregator.Controllers
         }
 
         /// <summary>
-        /// Attempts to retrieve Ad objects from cache if the exist, otherwise the objects are added to the cache. 
+        /// Attempts to retrieve Ad objects from cache if they exist, otherwise the objects are added to the cache. 
         /// </summary>
         /// <returns></returns>
         private async Task<IEnumerable<Ad>> GetAllAdsFromCacheAsync() {

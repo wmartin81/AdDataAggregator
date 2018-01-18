@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace AdDataAggregator.Models {
+﻿namespace AdDataAggregator.Models {
     public class SimpleAd {
         public int AdId { get; set; }
         public int BrandId { get; set; }

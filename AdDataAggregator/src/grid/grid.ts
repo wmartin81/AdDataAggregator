@@ -5,7 +5,7 @@ import { GridPager } from './grid-pager';
 export class Grid {
     template: string = '' +
     `<div class='grid'>
-        <div class='grid-title'>Please wait, loading for first time...</div>
+        <div class='grid-title'>Please wait, loading for the first time...</div>
         <div class='grid-content'>
             <table>
                 <thead></thead>
