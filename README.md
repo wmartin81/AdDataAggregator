@@ -1,5 +1,5 @@
 # AdDataAggregator
-Simple mvc web app built with c#, typescript, and some jquery that consumes public wcf service and displays a few grids. 
+Simple mvc web app built with c#, typescript and some jquery that consumes a public wcf service and displays a few grids. 
 
 # How to run
 First install dependencies and build javascript bundles. 
