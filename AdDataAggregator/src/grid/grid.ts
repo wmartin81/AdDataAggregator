@@ -5,13 +5,14 @@ import { GridPager } from './grid-pager';
 export class Grid {
     template: string = '' +
     `<div class='grid'>
-        <div class='grid-title'></div>
+        <div class='grid-title'>Please wait, loading for first time...</div>
         <div class='grid-content'>
             <table>
                 <thead></thead>
                 <tbody></tbody>
             </table>
         </div>
+        <div class='grid-pager'></div>
     </div>`;
 
     element: JQuery;
@@ -47,20 +48,28 @@ export class Grid {
     }
 
     renderHeaders() {
-        this.thead.empty();
-        let headers = '' +
-            `<tr>${this.data.Headers.map((header) => {
-                return (`<th data-key='${header}'>${header}</th>`)
-            })}</tr>`;
-        this.thead.append(headers);
+        this.renderHeadersData(this.data.Headers);
     }
 
     renderBody() {
+        this.pagination.isEnabled ? this.pagination.renderPage(1) : this.renderBodyData(this.data.Rows);
+    }
+
+    renderHeadersData(headers: string[]) {
+        this.thead.empty();
+        let tr = '' +
+            `<tr>${headers.map((header) => {
+                return (`<th data-key='${header}'>${header}</th>`)
+            })}</tr>`;
+        this.thead.append(tr);
+    }
+
+    renderBodyData(rows: object[]) {
         this.tbody.empty();
-        let rows = '' +
-            `${this.data.Rows.map((row) => {
+        let trs = '' +
+            `${rows.map((row) => {
                 return (`<tr>${Object.keys(row).map(key => `<td>${row[key]}</td>`)}</tr>`);
             })}`;
-        this.tbody.append(rows);
+        this.tbody.append(trs);
     }
 }

@@ -33,7 +33,7 @@ export class GridSort {
     enable() {
         let self = this;
         this.grid.thead.addClass('sortable');
-        this.grid.thead.on('click', 'th', function () {
+        this.grid.thead.off('click').on('click', 'th', function () {
             let th = $(this);
             let key = th.data('key');
             let order = th.data('order');

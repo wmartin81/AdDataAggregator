@@ -60,6 +60,7 @@ body {
 
 .grid table {
     border-collapse: collapse;
+    width:100%;
 }
 
 .grid td {
@@ -78,3 +79,25 @@ body {
     background-color: #03A9F4;
     color: white;
 }
+
+.grid-pager {
+    display: none;
+    padding: 10px;
+    border-top: 1px solid lightgray;
+}
+
+.grid-pager span.current-page{
+    font-weight:bold;
+}
+    .grid-pager button {
+        background-color: white;
+        border: 1px solid lightgray;
+        padding: 5px 15px;
+        outline:none;
+    }
+
+        .grid-pager button:hover {
+            cursor: pointer;
+            color: white;
+            background-color: #03A9F4
+        }
