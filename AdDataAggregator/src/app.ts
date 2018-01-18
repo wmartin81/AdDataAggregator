@@ -7,11 +7,23 @@ const main = () => {
     const proxy = new Proxy();
 
     const grid = new Grid();
-    proxy.list().done((data: GridData) => grid.render(data));
+    proxy.list().done((data: GridData) => {
+        grid.bind(data)
+            .enableSort()
+            .render()
+    });
 
     const menu = new Menu({
         onMenuItemClick: (menutItemId) => {
-            proxy.createJqXHR(menutItemId).done((data: GridData) => grid.render(data));
+            proxy[menutItemId]().done((data: GridData) => {
+                if (['list', 'cover'].indexOf(menutItemId) > -1)
+                    grid.enableSort();
+                else
+                    grid.disableSort();
+
+                grid.bind(data)
+                    .render()
+            });
         }
     });
 
