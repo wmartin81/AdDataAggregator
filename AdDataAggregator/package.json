@@ -14,6 +14,7 @@
     "webpack": "^3.10.0"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.ts"
+    "build": "webpack --config webpack.config.ts",
+    "watch": "webpack --progress --watch --config webpack.config.ts"
   }
 }

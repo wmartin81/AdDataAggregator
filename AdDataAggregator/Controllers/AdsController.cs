@@ -1,4 +1,5 @@
-﻿using AdDataAggregator.ServiceReference1;
+﻿using AdDataAggregator.Models;
+using AdDataAggregator.ServiceReference1;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -62,9 +63,21 @@ namespace AdDataAggregator.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("list")]
-        public async Task<IEnumerable<Ad>> GetAllAds() {
+        public async Task<GridData<SimpleAd>> GetAllAds() {
             var ads = await this.GetAllAdsFromCacheAsync();
-            return ads.OrderBy(a => a.Brand.BrandName);
+            
+            return new GridData<SimpleAd>() {
+                Headers = new string[] {
+                    nameof(SimpleAd.AdId), nameof(SimpleAd.BrandId), nameof(SimpleAd.BrandName), nameof(SimpleAd.NumPages), nameof(SimpleAd.Position)
+                },
+                Rows = ads.OrderBy(a => a.Brand.BrandName).Select(a => new SimpleAd() {
+                    AdId = a.AdId,
+                    BrandId = a.Brand.BrandId,
+                    BrandName = a.Brand.BrandName,
+                    NumPages = a.NumPages,
+                    Position = a.Position
+                })
+            };
         }
 
         /// <summary>
@@ -72,10 +85,22 @@ namespace AdDataAggregator.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("cover")]
-        public async Task<IEnumerable<Ad>> GetCoverAdsOver50() {
+        public async Task<GridData<SimpleAd>> GetCoverAdsOver50() {
             var ads = await this.GetAllAdsFromCacheAsync();
-            return ads.Where(a => a.Position == "Cover" && a.NumPages >= 0.5m)
-                .OrderBy(a => a.Brand.BrandName);
+
+            return new GridData<SimpleAd>() {
+                Headers = new string[] {
+                    nameof(SimpleAd.AdId), nameof(SimpleAd.BrandId), nameof(SimpleAd.BrandName), nameof(SimpleAd.NumPages), nameof(SimpleAd.Position)
+                },
+                Rows = ads.Where(a => a.Position == "Cover" && a.NumPages >= 0.5m)
+                .OrderBy(a => a.Brand.BrandName).Select(a => new SimpleAd() {
+                    AdId = a.AdId,
+                    BrandId = a.Brand.BrandId,
+                    BrandName = a.Brand.BrandName,
+                    NumPages = a.NumPages,
+                    Position = a.Position
+                })
+            };
         }
 
         /// <summary>
@@ -84,7 +109,7 @@ namespace AdDataAggregator.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("top5ads")]
-        public async Task<IEnumerable<Ad>> GetTop5Ads() {
+        public async Task<GridData<TopAd>> GetTop5Ads() {
             var ads = await this.GetAllAdsFromCacheAsync();
             var top5AdsDistinctBrand = new Dictionary<int, Ad>();
             foreach(var ad in ads.OrderByDescending(a => a.NumPages).ThenBy(a => a.Brand.BrandName)) {
@@ -94,7 +119,14 @@ namespace AdDataAggregator.Controllers
                 top5AdsDistinctBrand.Add(ad.Brand.BrandId, ad);
             }
 
-            return top5AdsDistinctBrand.Values.ToList();
+            return new GridData<TopAd>() {
+                Headers = new string[] { nameof(TopAd.AdId), nameof(TopAd.BrandName), nameof(TopAd.PageCoverage) },
+                Rows = top5AdsDistinctBrand.Values.Select(ad => new TopAd() {
+                    AdId = ad.AdId,
+                    BrandName = ad.Brand.BrandName,
+                    PageCoverage = ad.NumPages
+                })
+            };
         }
 
         /// <summary>
@@ -103,7 +135,7 @@ namespace AdDataAggregator.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("top5brands")]
-        public async Task<IEnumerable<Ad>> GetTop5Brands() {
+        public async Task<GridData<TopBrand>> GetTop5Brands() {
             var ads = await this.GetAllAdsFromCacheAsync();
             var topAdsByBrand = from ad in ads
                                 group ad by ad.Brand.BrandId into newGroup
@@ -113,7 +145,14 @@ namespace AdDataAggregator.Controllers
                 .ThenBy(a => a.Brand.BrandName)
                 .Take(5);
 
-            return top5Brands;
+            return new GridData<TopBrand>() {
+                Headers = new string[] { nameof(TopBrand.BrandId), nameof(TopBrand.BrandName), nameof(TopBrand.PageCoverage)},
+                Rows = top5Brands.Select(ad => new TopBrand() {
+                    BrandId = ad.Brand.BrandId,
+                    BrandName = ad.Brand.BrandName,
+                    PageCoverage = ad.NumPages
+                })
+            };
         }
     }
 }

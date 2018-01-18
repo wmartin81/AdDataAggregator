@@ -1,10 +1,23 @@
 ﻿import { Menu } from './menu';
-import { AdData } from './ad-data';
+import { Grid } from './grid';
+import { GridData } from './grid-data';
+import { Proxy } from './proxy';
 
 const main = () => {
+    const proxy = new Proxy();
+
+    const grid = new Grid();
+    proxy.list().done((data: GridData) => grid.render(data));
+
+    const menu = new Menu({
+        onMenuItemClick: (menutItemId) => {
+            proxy.createJqXHR(menutItemId).done((data: GridData) => grid.render(data));
+        }
+    });
+
     $('#jquery-app')
-        .append(Menu())
-        .append(AdData());
+        .append(menu.element)
+        .append(grid.element);
 }
 
 $(main);
