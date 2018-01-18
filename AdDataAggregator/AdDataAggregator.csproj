@@ -121,6 +121,7 @@
     </None>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="src\app.css" />
     <Content Include="Web.config" />
     <None Include="Connected Services\ServiceReference1\AdService2.xsd">
       <SubType>Designer</SubType>
@@ -175,9 +176,14 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\ad.ts" />
-    <TypeScriptCompile Include="src\grid-data.ts" />
-    <TypeScriptCompile Include="src\grid.ts" />
+    <TypeScriptCompile Include="src\app-header.ts" />
+    <TypeScriptCompile Include="src\app-content.ts" />
+    <TypeScriptCompile Include="src\grid\grid-data.ts" />
+    <TypeScriptCompile Include="src\grid\grid-pager.ts" />
+    <TypeScriptCompile Include="src\grid\grid-sort.ts" />
+    <TypeScriptCompile Include="src\grid\grid.ts" />
     <TypeScriptCompile Include="src\app.ts" />
+    <TypeScriptCompile Include="src\grid\index.ts" />
     <TypeScriptCompile Include="src\menu.ts" />
     <TypeScriptCompile Include="src\proxy.ts" />
     <TypeScriptCompile Include="webpack.config.ts" />
