@@ -2,8 +2,10 @@
 Simple mvc web app built with c#, typescript, and some jquery that consumes public wcf service and displays a few grids. 
 
 # How to run
-First install dependencies and build javascript bundles
+First install dependencies and build javascript bundles. 
+
 ```sh
+cd AdDataAggregator/AdDataAggregator
 npm install
 npm run build
 ```
