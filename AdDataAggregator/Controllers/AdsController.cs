@@ -26,8 +26,8 @@ namespace AdDataAggregator.Controllers {
                 DateTime taskStart = start;
                 DateTime taskEnd = start.AddMonths(1);
 
-                Task<Ad[]> firstHalf = client.GetAdDataByDateRangeAsync(taskStart, taskEnd);
-                tasks.Add(firstHalf);
+                Task<Ad[]> task = client.GetAdDataByDateRangeAsync(taskStart, taskEnd);
+                tasks.Add(task);
                 start = taskEnd;
             }
 
